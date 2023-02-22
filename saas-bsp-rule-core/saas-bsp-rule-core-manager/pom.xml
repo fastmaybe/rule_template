@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>saas-bsp-rule-core</artifactId>
+        <groupId>com.sf.saas.bsp</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>saas-bsp-rule-core-manager</artifactId>
+
+
+    <dependencies>
+        <!--        子模块开始-->
+        <dependency>
+            <groupId>com.sf.saas.bsp</groupId>
+            <artifactId>saas-bsp-rule-core-dao</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sf.saas.bsp</groupId>
+            <artifactId>saas-bsp-rule-core-common</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <!--        子模块结束-->
+
+
+        <!--    第三方库开始-->
+        <!-- openfeign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <!-- okhttp -->
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-okhttp</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <!--      local  cache-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <!--tool-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+
+        <!--    第三方库结束-->
+
+        <!--    第三方组件如redis es 存储桶 开始-->
+        <!-- redisson -->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+        </dependency>
+        <!-- redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!--    第三方组件结束-->
+
+        <!--        SF SAAS日志组件-->
+        <dependency>
+            <groupId>com.sf.saas.sdk</groupId>
+            <artifactId>saas-sdk-log4j-starter</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-starter-log4j2</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sf.saas</groupId>
+            <artifactId>next-cdm-int-api</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+
+    </dependencies>
+
+</project>

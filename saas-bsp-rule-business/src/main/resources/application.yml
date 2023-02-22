@@ -1,0 +1,43 @@
+server:
+  port: 8088
+  servlet:
+    context-path: /saas-bsp-rule
+
+app:
+  id: saas-bsp-rule-service
+
+apollo:
+  meta: http://10.148.240.4:8080
+  cacheDir: ./apollo
+  bootstrap:
+    cluster: default
+    enabled: true
+    namespaces: application,repository
+
+swagger:
+  enabled: true
+
+spring:
+  application:
+    name: saas-bsp-rule-service
+  messages:
+    basename: i18n/message
+
+management:
+  server:
+    port: -1
+
+# com.sf.saas.bps.core.service.config.mybatis-plus
+mybatis-plus:
+  # xml
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  global-config:
+    banner: false
+    db-config:
+      id-type: auto
+  configuration:
+    log-impl: ${mybatis-plus-log-impl}
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+

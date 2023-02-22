@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sf.saas.bsp.rule.core.dao.mapper.RuleInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.sf.saas.bsp.rule.core.dao.entity.RuleInfo">
+        <id column="id" property="id"/>
+        <result column="tenant_id" property="tenantId"/>
+        <result column="config_name" property="configName"/>
+        <result column="field_key" property="fieldKey"/>
+        <result column="web_field_name" property="webFieldName"/>
+        <result column="rule_template" property="ruleTemplate"/>
+        <result column="state" property="state"/>
+        <result column="remark" property="remark"/>
+        <result column="order_channel" property="orderChannel"/>
+        <result column="rule_type" property="ruleType"/>
+        <result column="config_key" property="configKey"/>
+        <result column="rule_condition" property="ruleCondition"/>
+        <result column="rule_condition_backstage" property="ruleConditionBackstage"/>
+        <result column="pre_condition" property="preCondition"/>
+        <result column="pre_condition_md5" property="preConditionMd5"/>
+        <result column="month_card_no_white" property="monthCardNoWhite"/>
+        <result column="web_display" property="webDisplay"/>
+        <result column="web_display_order" property="webDisplayOrder"/>
+        <result column="create_by" property="createBy"/>
+        <result column="modified_by" property="modifiedBy"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+    </resultMap>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMapCollection" type="com.sf.saas.bsp.rule.core.dto.vo.RuleInfoVo">
+        <id column="id" property="id"/>
+        <result column="tenant_id" property="tenantId"/>
+        <result column="config_name" property="configName"/>
+        <result column="field_key" property="fieldKey"/>
+        <result column="web_field_name" property="webFieldName"/>
+        <result column="rule_template" property="ruleTemplate"/>
+        <result column="from_template" property="fromTemplate"/>
+        <result column="state" property="state"/>
+        <result column="remark" property="remark"/>
+        <result column="order_channel" property="orderChannel"/>
+        <result column="rule_type" property="ruleType"/>
+        <result column="config_key" property="configKey"/>
+        <result column="rule_condition" property="ruleCondition"/>
+        <result column="rule_condition_backstage" property="ruleConditionBackstage"/>
+        <result column="pre_condition" property="preCondition"/>
+        <result column="pre_condition_md5" property="preConditionMd5"/>
+        <result column="month_card_no_white" property="monthCardNoWhite"/>
+        <result column="web_display" property="webDisplay"/>
+        <result column="web_display_order" property="webDisplayOrder"/>
+        <result column="create_by" property="createBy"/>
+        <result column="modified_by" property="modifiedBy"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <collection ofType="com.sf.saas.bsp.rule.core.dto.vo.RuleTipContentVo" property="ruleTipContentVos">
+            <result column="tip_content_id" property="id"/>
+            <result column="lang" property="lang"/>
+            <result column="content" property="content"/>
+            <result column="tenant_id2" property="tenantId"/>
+            <result column="tip_type" property="tipType"/>
+            <result column="create_by2" property="createBy"/>
+            <result column="modified_by2" property="modifiedBy"/>
+            <result column="gmt_create2" property="gmtCreate"/>
+            <result column="gmt_modified2" property="gmtModified"/>
+        </collection>
+    </resultMap>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMapCollection2" type="com.sf.saas.bsp.rule.core.dto.vo.RuleInfoVo">
+        <id column="id" property="id"/>
+        <result column="tenant_id" property="tenantId"/>
+        <result column="config_name" property="configName"/>
+        <result column="field_key" property="fieldKey"/>
+        <result column="web_field_name" property="webFieldName"/>
+        <result column="rule_template" property="ruleTemplate"/>
+        <result column="state" property="state"/>
+        <result column="remark" property="remark"/>
+        <result column="order_channel" property="orderChannel"/>
+        <result column="rule_type" property="ruleType"/>
+        <result column="config_key" property="configKey"/>
+        <result column="rule_condition" property="ruleCondition"/>
+        <result column="rule_condition_backstage" property="ruleConditionBackstage"/>
+        <result column="pre_condition" property="preCondition"/>
+        <result column="pre_condition_md5" property="preConditionMd5"/>
+        <result column="month_card_no_white" property="monthCardNoWhite"/>
+        <result column="web_display" property="webDisplay"/>
+        <result column="web_display_order" property="webDisplayOrder"/>
+        <result column="create_by" property="createBy"/>
+        <result column="modified_by" property="modifiedBy"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <collection ofType="com.sf.saas.bsp.rule.core.dto.vo.RuleTipContentVo"
+                    property="ruleTipContentVos"
+                    column="id"
+                    select="selectRuleTipContentWithRuleId"
+                    javaType="java.util.ArrayList">
+        </collection>
+    </resultMap>
+
+    <resultMap id="selectRuleTipContentWithRuleIdResultMap" type="com.sf.saas.bsp.rule.core.dto.vo.RuleTipContentVo">
+        <result column="id" property="id"/>
+        <result column="lang" property="lang"/>
+        <result column="content" property="content"/>
+        <result column="tenant_id2" property="tenantId"/>
+        <result column="tip_type" property="tipType"/>
+        <result column="create_by2" property="createBy"/>
+        <result column="modified_by2" property="modifiedBy"/>
+        <result column="gmt_create2" property="gmtCreate"/>
+        <result column="gmt_modified2" property="gmtModified"/>
+    </resultMap>
+
+    <select id="selectRuleTipContentWithRuleId" resultMap="selectRuleTipContentWithRuleIdResultMap">
+        select * from bsp_rule_tip_content
+        where id=#{id}
+    </select>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, tenant_id, config_name, field_key, state, remark, order_channel, rule_type, config_key, rule_condition, pre_condition, pre_condition_md5, month_card_no_white, create_by, modified_by, gmt_create, gmt_modified
+    </sql>
+
+
+    <select id="loadWebBaseRule" parameterType="com.sf.saas.bsp.rule.core.dto.req.LoadOrderPageBaseRuleQueryVo"
+            resultMap="BaseResultMapCollection">
+        SELECT
+        ri.*,
+        ric.id as tip_content_id,
+        ric.tenant_id as tenant_id2,
+        ric.lang as lang,
+        ric.content as content,
+        ric.tip_type as tip_type,
+        ric.create_by as create_by2,
+        ric.modified_by as modified_by2,
+        ric.gmt_create as gmt_create2,
+        ric.gmt_modified as gmt_modified2
+        FROM bsp_rule_info ri LEFT JOIN bsp_rule_tip_content ric ON ri.id = ric.rule_id and ric.tip_type = 1
+        <where>
+            ri.tenant_id = #{tenantId}
+            and ri.rule_type = 1
+            and ri.state = 1
+            and ri.web_field_name is not null
+            and ri.web_field_name !=''
+            <if test="orderChannel != null">
+                and FIND_IN_SET(#{orderChannel}, ri.order_channel)
+            </if>
+            <if test="monthCardNoWhite != null and monthCardNoWhite != ''">
+                and FIND_IN_SET(#{monthCardNoWhite}, ri.month_card_no_white) = 0
+            </if>
+        </where>
+
+    </select>
+
+    <!--    子查询-->
+    <select id="selectByParam——bak2" resultMap="BaseResultMapCollection2"
+            parameterType="com.sf.saas.bsp.rule.core.dto.req.RuleVoQueryReq">
+        select
+        ri.*
+        FROM bsp_rule_info ri
+        <where>
+            <choose>
+                <when test="tenantId != null and tenantId != ''">
+                    and ri.tenant_id = #{tenantId}
+                </when>
+                <otherwise>
+                    and ri.tenant_id is null
+                </otherwise>
+            </choose>
+
+            <if test="state != null">
+                and ri.state = #{state}
+            </if>
+            <if test="ruleType != null">
+                and ri.rule_type = #{ruleType}
+            </if>
+            <if test="ruleTemplate != null">
+                and ri.rule_template = #{ruleTemplate}
+            </if>
+            <if test="configName != null and configName != ''">
+                and ri.config_name like concat(concat('%', #{configName}), '%')
+            </if>
+            <if test="fieldKey != null and fieldKey != ''">
+                and ri.field_key like concat(concat('%', #{fieldKey}), '%') or ri.web_field_name like concat(concat('%',
+                #{fieldKey}), '%')
+            </if>
+        </where>
+        order by ri.gmt_modified desc
+        LIMIT #{offset},#{pageSize}
+    </select>
+
+
+    <!--    left join-->
+    <select id="selectByParam" resultMap="BaseResultMapCollection"
+            parameterType="com.sf.saas.bsp.rule.core.dto.req.RuleVoQueryReq">
+        select inne.*,
+            ric.id as tip_content_id,
+            ric.tenant_id as tenant_id2,
+            ric.lang as lang,
+            ric.content as content,
+            ric.tip_type as tip_type,
+            ric.create_by as create_by2,
+            ric.modified_by as modified_by2,
+            ric.gmt_create as gmt_create2,
+            ric.gmt_modified as gmt_modified2
+        FROM
+             (
+                select
+                    ri.*
+                FROM
+                bsp_rule_info ri
+                <where>
+                    <choose>
+                        <when test="tenantId != null and tenantId != ''">
+                            and ri.tenant_id = #{tenantId}
+                        </when>
+                        <otherwise>
+                            and ri.tenant_id is null
+                        </otherwise>
+                    </choose>
+
+                    <if test="state != null">
+                        and ri.state = #{state}
+                    </if>
+                    <if test="ruleType != null">
+                        and ri.rule_type = #{ruleType}
+                    </if>
+                    <if test="ruleTemplate != null">
+                        and ri.rule_template = #{ruleTemplate}
+                    </if>
+                    <if test="configName != null and configName != ''">
+                        and ri.config_name like concat(concat('%', #{configName}), '%')
+                    </if>
+                    <if test="fieldKey != null and fieldKey != ''">
+                        and (ri.field_key like concat(concat('%', #{fieldKey}), '%') or ri.web_field_name like concat(concat('%',
+                        #{fieldKey}), '%'))
+                    </if>
+                </where>
+                order by ri.gmt_modified desc
+                LIMIT #{offset},#{pageSize}
+            ) inne
+        LEFT JOIN bsp_rule_tip_content ric ON inne.id = ric.rule_id
+    </select>
+
+<!--    错误的-->
+    <select id="selectByParam——bak-bak" resultMap="BaseResultMapCollection"
+            parameterType="com.sf.saas.bsp.rule.core.dto.req.RuleVoQueryReq">
+        select
+        ri.*,
+        ric.id as tip_content_id,
+        ric.tenant_id as tenant_id2,
+        ric.lang as lang,
+        ric.content as content,
+        ric.tip_type as tip_type,
+        ric.create_by as create_by2,
+        ric.modified_by as modified_by2,
+        ric.gmt_create as gmt_create2,
+        ric.gmt_modified as gmt_modified2
+        FROM bsp_rule_info ri LEFT JOIN bsp_rule_tip_content ric ON ri.id = ric.rule_id
+        <where>
+            <choose>
+                <when test="tenantId != null and tenantId != ''">
+                    and ri.tenant_id = #{tenantId}
+                </when>
+                <otherwise>
+                    and ri.tenant_id is null
+                </otherwise>
+            </choose>
+
+            <if test="state != null">
+                and ri.state = #{state}
+            </if>
+            <if test="ruleType != null">
+                and ri.rule_type = #{ruleType}
+            </if>
+            <if test="ruleTemplate != null">
+                and ri.rule_template = #{ruleTemplate}
+            </if>
+            <if test="configName != null and configName != ''">
+                and ri.config_name like concat(concat('%', #{configName}), '%')
+            </if>
+            <if test="fieldKey != null and fieldKey != ''">
+                and ri.field_key like concat(concat('%', #{fieldKey}), '%') or ri.web_field_name like concat(concat('%',
+                #{fieldKey}), '%')
+            </if>
+        </where>
+        order by ri.gmt_modified desc
+        LIMIT #{offset},#{pageSize}
+    </select>
+
+
+    <select id="selectByParamCount" resultType="Integer"
+            parameterType="com.sf.saas.bsp.rule.core.dto.req.RuleVoQueryReq">
+        select
+        count(1)
+        FROM bsp_rule_info ri
+        <where>
+            <choose>
+                <when test="tenantId != null and tenantId != ''">
+                    and ri.tenant_id = #{tenantId}
+                </when>
+                <otherwise>
+                    and ri.tenant_id is null
+                </otherwise>
+            </choose>
+
+            <if test="state != null">
+                and ri.state = #{state}
+            </if>
+            <if test="ruleType != null">
+                and ri.rule_type = #{ruleType}
+            </if>
+            <if test="ruleTemplate != null">
+                and ri.rule_template = #{ruleTemplate}
+            </if>
+            <if test="configName != null and configName != ''">
+                and ri.config_name like concat(concat('%', #{configName}), '%')
+            </if>
+            <if test="fieldKey != null and fieldKey != ''">
+                and (ri.field_key like concat(concat('%', #{fieldKey}), '%') or ri.web_field_name like concat(concat('%',
+                #{fieldKey}), '%'))
+            </if>
+        </where>
+
+    </select>
+
+
+    <select id="selectCheckRulePool" resultMap="BaseResultMapCollection">
+        select
+        ri.*,
+        ric.id as tip_content_id,
+        ric.rule_id as rule_id,
+        ric.tenant_id as tenant_id2,
+        ric.lang as lang,
+        ric.content as content,
+        ric.tip_type as tip_type,
+        ric.create_by as create_by2,
+        ric.modified_by as modified_by2,
+        ric.gmt_create as gmt_create2,
+        ric.gmt_modified as gmt_modified2
+        FROM bsp_rule_info ri LEFT JOIN bsp_rule_tip_content ric ON ri.id = ric.rule_id AND ric.tip_type = 0
+        <where>
+            ri.tenant_id = #{tenantId}
+            <if test="state != null">
+                AND ri.state = #{state}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="selectTemplateList" resultMap="BaseResultMapCollection">
+        select
+            ri.*,
+            ric.id as tip_content_id,
+            ric.rule_id as rule_id,
+            ric.tenant_id as tenant_id2,
+            ric.lang as lang,
+            ric.content as content,
+            ric.tip_type as tip_type,
+            ric.create_by as create_by2,
+            ric.modified_by as modified_by2,
+            ric.gmt_create as gmt_create2,
+            ric.gmt_modified as gmt_modified2
+        FROM bsp_rule_info ri LEFT JOIN bsp_rule_tip_content ric ON ri.id = ric.rule_id AND ric.tip_type = 0
+        WHERE ri.rule_template = 1 and ri.state = 1
+    </select>
+
+</mapper>
