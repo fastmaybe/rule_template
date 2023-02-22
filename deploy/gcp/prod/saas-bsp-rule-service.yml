@@ -1,0 +1,112 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: saas-bsp-rule-service
+  name: saas-bsp-rule-service
+  namespace: saas
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: saas-bsp-rule-service
+  minReadySeconds: 150
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9404"
+      labels:
+        app: saas-bsp-rule-service
+    spec:
+      containers:
+        - env:
+            - name: JAVA_OPTS
+              value: "-Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -server -Xmx2g -Xms2g -Xmn256m -XX:MetaspaceSize=128m -Xss256k -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -Duser.timezone=GMT+08 -Dlog4j2.formatMsgNoLookups=true"
+            - name: apollo.meta
+              valueFrom:
+                configMapKeyRef:
+                  key: apollo.meta
+                  name: saas-apollo
+            - name: SW_AGENT_NAME
+              value: saas-bsp-rule-service
+          image: gcr.io/ibu-sfes-core-sgp-prod/ibu-sfes-core-saas-bsp-rule-service:prod_rule.20221117141733
+          imagePullPolicy: Always
+          name: saas-bsp-rule-service
+          securityContext:
+            privileged: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /etc/skywalking
+              name: skywalking
+            - mountPath: /etc/localtime
+              name: localtime
+      dnsPolicy: ClusterFirst
+      serviceAccountName: saas-serviceaccount
+      imagePullSecrets:
+        - name: docker-registry-secret
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - configMap:
+            defaultMode: 420
+            items:
+              - key: agent.config
+                mode: 420
+                path: agent.config
+            name: saas-skywalking
+          name: skywalking
+        - hostPath:
+            path: /etc/localtime
+            type: File
+          name: localtime
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: saas-bsp-rule-service
+  namespace: saas
+spec:
+  ports:
+    - name: 8080-8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: saas-bsp-rule-service
+  sessionAffinity: None
+  type: ClusterIP
+
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  labels:
+    app: saas-bsp-rule-service
+  name: saas-bsp-rule-service
+  namespace: saas
+spec:
+  minReplicas: 2
+  maxReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: saas-bsp-rule-service
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 80
